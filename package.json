@@ -1,0 +1,25 @@
+{
+  "name": "major-project-1---airbnb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SAGAR-RAJ1/-AirBnb-Reloaded.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SAGAR-RAJ1/-AirBnb-Reloaded/issues"
+  },
+  "homepage": "https://github.com/SAGAR-RAJ1/-AirBnb-Reloaded#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.15.0"
+  }
+}
