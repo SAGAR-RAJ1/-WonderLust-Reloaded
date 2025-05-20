@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const Listing = require("./models/listing.js");
-const methodOverride = require('method-override')
+const methodOverride = require('method-override');
+const ejsMate = require("ejs-mate");//helps to create template
+app.engine('ejs', ejsMate)  //
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -10,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.use(methodOverride('_method'))
+
 
 //connection with the mongodb server using mongoose
 const mongoose = require("mongoose");
