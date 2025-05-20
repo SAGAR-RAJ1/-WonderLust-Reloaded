@@ -35,16 +35,31 @@ app.get('/', function(req, res) {
     res.send("welcome");
 });
 
-app.get('/tes',async function(req, res) {
-     let sample = new Listing({
-        title : "My Home Town house",
-        description: "Very good house vary vary good house",
-        location:"gaya,bihar",
-        price:40000000,
-        country:"India"
-     })
-    await sample.save();
-    console.log("Data uploadedd");
-    res.send("Sucess")
+//? Index Route
+
+app.get('/listings', async function(req, res) {
+  let allListings = await Listing.find({});
+  res.render("./listings/index.ejs",{allListings})
 });
+//? Show Route
+
+app.get('/listings/:id', async function(req, res) {
+     let {id} = req.params;
+     const listing = await Listing.findById(id);
+     res.render("./listings/show.ejs",{listing})
+
+});
+
+// app.get('/test',async function(req, res) {
+//      let sample = new Listing({
+//         title : "My Home Town house",
+//         description: "Very good house vary vary good house",
+//         location:"gaya,bihar",
+//         price:40000000,
+//         country:"India"
+//      })
+//     await sample.save();
+//     console.log("Data uploadedd");
+//     res.send("Sucess")
+// });
 app.listen(3000);
