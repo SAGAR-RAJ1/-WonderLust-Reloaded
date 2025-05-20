@@ -2,12 +2,14 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const Listing = require("./models/listing.js");
+const methodOverride = require('method-override')
 
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
+app.use(methodOverride('_method'))
 
 //connection with the mongodb server using mongoose
 const mongoose = require("mongoose");
@@ -53,9 +55,9 @@ app.post("/listings", async function (req, res) {
   let {title,description,image,price,location,country} = req.body;
  
   const newListing = new Listing({
-    title,
-    description,
-    image,
+    title:title,
+    description:description,
+    image,//Dono method shi h naam same h toh direct v likh skhte ho
     price,
     location,
     country,
@@ -65,6 +67,30 @@ app.post("/listings", async function (req, res) {
 
   res.redirect("./listings")
 });
+
+//! Edit Route
+
+app.get("/listing/:id/edit", async function (req, res) {
+  let { id } = req.params;
+  const listing = await Listing.findById(id);
+
+  res.render("listings/edit.ejs",{listing})
+
+});
+
+//! Upadte Route
+
+app.put("/listing/:id", async function (req, res) {
+  let { id } = req.params;
+  let {title,description,image,price,location,country} = req.body;
+   
+  // Listing.findByIdAndUpdate()
+  await Listing.findByIdAndUpdate(id, { title, description, image, price, location, country }, { new: true });
+
+  res.redirect(`/listings/${id}`);
+
+});
+
 
 
 // app.get('/test',async function(req, res) {
