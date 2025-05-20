@@ -1,54 +1,71 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const path = require('path');
-const Listing = require("./models/listing.js")
-
-
-
-
+const path = require("path");
+const Listing = require("./models/listing.js");
 
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-app.set("views",path.join(__dirname, "views"));
-
+app.set("views", path.join(__dirname, "views"));
 
 //connection with the mongodb server using mongoose
-const mongoose = require('mongoose');
-const { title } = require('process');
+const mongoose = require("mongoose");
+const { title } = require("process");
 
 main()
   .then(() => {
     console.log("connection Successful");
   })
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+  await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
 }
 
-
-
-
-app.get('/', function(req, res) {
-    res.send("welcome");
+app.get("/", function (req, res) {
+  res.send("welcome");
 });
 
-//? Index Route
+//! Index Route
 
-app.get('/listings', async function(req, res) {
+app.get("/listings", async function (req, res) {
   let allListings = await Listing.find({});
-  res.render("./listings/index.ejs",{allListings})
+  res.render("./listings/index.ejs", { allListings });
 });
-//? Show Route
 
-app.get('/listings/:id', async function(req, res) {
-     let {id} = req.params;
-     const listing = await Listing.findById(id);
-     res.render("./listings/show.ejs",{listing})
+//! New Route
 
+app.get("/listings/new", function (req, res) {
+  res.render("./listings/new.ejs");
 });
+//! Show Route
+
+app.get("/listings/:id", async function (req, res) {
+  let { id } = req.params;
+  const listing = await Listing.findById(id);
+  res.render("./listings/show.ejs", { listing });
+});
+
+//! Create Route
+
+app.post("/listings", async function (req, res) {
+  let {title,description,image,price,location,country} = req.body;
+ 
+  const newListing = new Listing({
+    title,
+    description,
+    image,
+    price,
+    location,
+    country,
+  });
+
+  await newListing.save();
+
+  res.redirect("./listings")
+});
+
 
 // app.get('/test',async function(req, res) {
 //      let sample = new Listing({
