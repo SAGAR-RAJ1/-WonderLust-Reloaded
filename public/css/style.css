@@ -10,3 +10,26 @@
   color: #222222 !important ; 
   /* important use krte bootstrap k styling ko overcome krne k liye */
 }
+.f-info-links a{
+    color: #222222;
+    text-decoration: none;
+}
+.f-info-links , .f-info-socials {
+    width: 100%;padding: 1rem;
+}
+
+.f-info-socials i{
+    margin-right: 1rem;font-size: 1.4rem;
+   
+}
+.f-info-links a:hover{
+   text-decoration: underline;
+}
+.f-info {
+    text-align: center;
+    display: flex;
+    height: 8rem;
+    background-color: aliceblue;
+    justify-content: center;
+    flex-wrap: wrap;
+}
