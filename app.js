@@ -91,6 +91,15 @@ app.put("/listing/:id", async function (req, res) {
 
 });
 
+//! Delete route
+
+app.delete("/listing/:id", async function (req, res) {
+  let {id} = req.params;
+  await Listing.findByIdAndDelete(id);
+  // res.redirect(`/listing/{$id}`);  mistake i have made in the syntax
+  res.redirect("/listings");
+});
+
 
 
 // app.get('/test',async function(req, res) {
