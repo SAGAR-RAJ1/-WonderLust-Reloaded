@@ -2,6 +2,7 @@
     height: 5rem;
     background-color:aliceblue;
 }
+
 .fa-compass{
     color: rgb(98, 24, 24);
     font-size: 2rem;
@@ -32,4 +33,29 @@
     background-color: aliceblue;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.card{
+margin-bottom: 2rem;
+border:none !important;
+}
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+.card-body{
+    padding: 0 !important;
+    font-weight: 400;
+}
+.card-click{
+    text-decoration: none;
+}
+.card-img-overlay{
+  background-color: aliceblue;
+    opacity: 0;
+}
+.card-img-overlay:hover{
+     
+    opacity: 0.3;
 }
