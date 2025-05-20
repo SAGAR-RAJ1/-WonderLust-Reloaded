@@ -1,27 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Listing</title>
-</head>
+<% layout("/layouts/boilerplate") %>
+
 <body>
     <h3>Edit your Listing</h3>
     <form action="/listing/<%= listing._id %>?_method=put" method="post">
-    
-        <input type="text" value="<%= listing.title  %>" name="title">
-        <br><br>
-        <textarea name="description"  rows="5"><%= listing.description  %></textarea>
-        <br><br>
-        <input type="text" value="<%= listing.image.url  %>" name="image">
-        <br><br>
-        <input type="number" value="<%= listing.price  %>" name="price">
-        <br><br>
-        <input type="text" value="<%= listing.location  %>" name="location">
-        <br><br>
-        <input type="text" value="<%= listing.country  %>" name="country">
-        <br><br>
-        <button>Add</button>
+        <div class="mb-3" >
+            <label for="title" class="form-label">Title :</label>
+             <input type="text" value="<%= listing.title  %>" name="title" class="form-control">
+        </div>
+        <div class="mb-3" >
+            <label for="description" class="form-label">Description :</label>
+            <textarea name="description" style="resize: none;" class="form-control" rows="5"  ><%= listing.description  %>  </textarea>
+        </div>
+        <div class="mb-3" >
+            <label for="image" class="form-label">Image-URL :</label>
+            <input type="text" value="<%= listing.image.url  %>" name="image" class="form-control">
+        </div>
+        <div class="mb-3" >
+            <label for="price" class="form-label">Price :</label>
+            <input type="number" class="form-control" value="<%= listing.price  %>" name="price">
+        </div>
+        <div class="mb-3" >
+            <label for="location" class="form-label">Location :</label>
+            <input type="text" class="form-control"  value="<%= listing.location  %>" name="location">
+        </div>
+        <div class="mb-3" >
+            <label for="country" class="form-label">Country :</label>
+            <input type="text" class="form-control" value="<%= listing.country  %>" name="country">
+        </div>
+ 
+        <button class="btn btn-dark">Add</button>
     </form>
 </body>
-</html>
