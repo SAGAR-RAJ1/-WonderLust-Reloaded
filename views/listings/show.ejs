@@ -1,22 +1,30 @@
 <% layout("/layouts/boilerplate") %>
+   
+<div class="row mt-3">
+    <div class="col-8 offset-2">
 
-<body>
     <h3>Listing Detail : </h3>
+    <img src="<%= listing.image.url  %>" class="card-img-top show-img" alt="Listing-Image">
+    <div class="card-body">
+      <h5 class="card-title"><b><%= listing.title  %></b></h5>
+      <p class="card-text"><%= listing.description  %></p>
+      <p>&#8377 <%= listing.price.toLocaleString("en-IN")  %></p>
+      <p><%= listing.location  %> </p>
+      <p><%= listing.country  %> </p>
+     
+    </div>
 
-    <ul>
-        <li><%= listing.title  %></li>
-        <li><%= listing.description  %></li>
-        <li> &#8377 <%= listing.price.toLocaleString("en-IN")  %></li>
-        <li><%= listing.location  %></li>
-        <li><%= listing.country  %></li>
-        <br><br>
-        <form action="/listing/<%= listing._id  %>/edit" method="get">
-            <button>Edit Route</button>
+   <div class="buttons">
+     <form action="/listing/<%= listing._id  %>/edit" method="get">
+            <button class="btn btn-dark">Edit Route</button>
         </form>
         <br>
+ 
         <form action="/listing/<%= listing._id  %>?_method=DELETE" method="post">
-            <button>Delete Route</button>
+            <button class="btn btn-dark">Delete Route</button>
         </form>
-    </ul>
+
+   </div>
+       
     
-</body>
+</div></div>
