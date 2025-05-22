@@ -6,6 +6,8 @@ const methodOverride = require('method-override');
 const ejsMate = require("ejs-mate");//helps to create template
 app.engine('ejs', ejsMate)  //
 
+const wrapAsync = require("./utils/WrapAsync.js");
+
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -54,7 +56,7 @@ app.get("/listings/:id", async function (req, res) {
 
 //! Create Route
 
-app.post("/listings", async function (req, res) {
+app.post("/listings", wrapAsync(async function (req, res) {
   let {title,description,image,price,location,country} = req.body;
  
   const newListing = new Listing({
@@ -69,7 +71,7 @@ app.post("/listings", async function (req, res) {
   await newListing.save();
 
   res.redirect("./listings")
-});
+}));
 
 //! Edit Route
 
@@ -103,7 +105,11 @@ app.delete("/listing/:id", async function (req, res) {
   res.redirect("/listings");
 });
 
-
+//!Error handling middleware
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).send("Something went wrong");
+});
 
 // app.get('/test',async function(req, res) {
 //      let sample = new Listing({
