@@ -7,6 +7,7 @@ const ejsMate = require("ejs-mate");//helps to create template
 app.engine('ejs', ejsMate)  //
 
 const wrapAsync = require("./utils/WrapAsync.js");
+const ExpressError= require("./utils/ExpressError.js");
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -31,15 +32,15 @@ async function main() {
 }
 
 app.get("/", function (req, res) {
-  res.send("welcome");
+  res.send("Root Route");
 });
 
 //! Index Route
 
-app.get("/listings", async function (req, res) {
+app.get("/listings",wrapAsync (async function (req, res) {
   let allListings = await Listing.find({});
   res.render("./listings/index.ejs", { allListings });
-});
+}));
 
 //! New Route
 
@@ -48,17 +49,26 @@ app.get("/listings/new", function (req, res) {
 });
 //! Show Route
 
-app.get("/listings/:id", async function (req, res) {
+app.get("/listings/:id", wrapAsync(async function (req, res) {
   let { id } = req.params;
   const listing = await Listing.findById(id);
   res.render("./listings/show.ejs", { listing });
-});
+}));
 
 //! Create Route
 
 app.post("/listings", wrapAsync(async function (req, res) {
   let {title,description,image,price,location,country} = req.body;
- 
+  console.log("Received body:", req.body);
+
+  if (!title || !description || !image || !price || !location || !country) {
+    throw new ExpressError("All fields are required", 400);
+  }
+  if (isNaN(price)) {
+    throw new ExpressError("Price must be a number", 400);
+  }
+
+  // console.log("Price after conversion:", price);
   const newListing = new Listing({
     title:title,
     description:description,
@@ -70,22 +80,23 @@ app.post("/listings", wrapAsync(async function (req, res) {
 
   await newListing.save();
 
-  res.redirect("./listings")
+  // res.redirect("./listings")
+  res.send("Listing saved successfully!");
 }));
 
 //! Edit Route
 
-app.get("/listing/:id/edit", async function (req, res) {
+app.get("/listing/:id/edit", wrapAsync(async function (req, res) {
   let { id } = req.params;
   const listing = await Listing.findById(id);
 
   res.render("listings/edit.ejs",{listing})
 
-});
+}));
 
 //! Upadte Route
 
-app.put("/listing/:id", async function (req, res) {
+app.put("/listing/:id",wrapAsync( async function (req, res) {
   let { id } = req.params;
   let {title,description,image,price,location,country} = req.body;
    
@@ -94,21 +105,27 @@ app.put("/listing/:id", async function (req, res) {
 
   res.redirect(`/listings/${id}`);
 
-});
+}));
 
 //! Delete route
 
-app.delete("/listing/:id", async function (req, res) {
+app.delete("/listing/:id",wrapAsync( async function (req, res) {
   let {id} = req.params;
   await Listing.findByIdAndDelete(id);
   // res.redirect(`/listing/{$id}`);  mistake i have made in the syntax
   res.redirect("/listings");
-});
+}));
+
+// Catch-all route for any undefined path
+// app.all("*", (req, res, next) => {
+//   next(new ExpressError("Page Not Found", 404));
+// });
+
 
 //!Error handling middleware
 app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).send("Something went wrong");
+  let { status = 500, message = "Something went wrong" } = err;
+  res.status(status).send(message);
 });
 
 // app.get('/test',async function(req, res) {
