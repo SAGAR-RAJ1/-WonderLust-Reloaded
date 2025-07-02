@@ -61,7 +61,7 @@ app.post("/listings", wrapAsync(async function (req, res) {
   let {title,description,image,price,location,country} = req.body;
   console.log("Received body:", req.body);
 
-  if (!title || !description || !image || !price || !location || !country) {
+  if (!title || !description || !price || !location || !country) {
     throw new ExpressError("All fields are required", 400);
   }
   if (isNaN(price)) {
@@ -94,7 +94,7 @@ app.get("/listing/:id/edit", wrapAsync(async function (req, res) {
 
 }));
 
-//! Upadte Route
+//! Update Route
 
 app.put("/listing/:id",wrapAsync( async function (req, res) {
   let { id } = req.params;
