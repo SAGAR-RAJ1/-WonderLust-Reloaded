@@ -51,8 +51,8 @@ app.get("/listings/new", function (req, res) {
 //! Show Route
 
 app.get("/listings/:id", wrapAsync(async function (req, res) {
-  let { id } = req.params;
-  const listing = await Listing.findById(id);
+  let { id } = req.params;                 //populate add kiye kuki  object k id k sath sath uska data v is m aaye  islye add kiye
+  const listing = await Listing.findById(id).populate("reviews");
   res.render("./listings/show.ejs", { listing });
 }));
 
