@@ -116,9 +116,9 @@ app.delete("/listing/:id",wrapAsync( async function (req, res) {
   res.redirect("/listings");
 }));
 
-// Catch-all route for any undefined path
+// Catch-all route handler (404)
 // app.all("*", (req, res, next) => {
-//   next(new ExpressError("Page Not Found", 404));
+// res.send("hy")
 // });
 
 
