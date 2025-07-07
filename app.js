@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const Listing = require("./models/listing.js");
+const Review = require("./models/review.js");
 const methodOverride = require('method-override');
 const ejsMate = require("ejs-mate");//helps to create template
 app.engine('ejs', ejsMate)  //
@@ -121,6 +122,20 @@ app.delete("/listing/:id",wrapAsync( async function (req, res) {
 // res.send("hy")
 // });
 
+//!reviews
+//post route for the reviews
+app.post("/listings/:id/reviews",async function (req,res){
+ let listing = await Listing.findById(req.params.id);
+ let newRev = new Review(req.body.review);
+
+ listing.reviews.push(newRev);
+
+ await newRev.save();
+await listing.save();
+
+// req.send("New review save")
+res.redirect(`/listings/${req.params.id}`)
+})
 
 //!Error handling middleware
 app.use((err, req, res, next) => {
