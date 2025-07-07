@@ -9,13 +9,13 @@ const reviewSchema = new Schema({
   },
 
   rating: {
-   type: String,
+   type: Number,
    min:1,
    max:5
   },
- createdaAt:{
+ createdAt:{
     type:Date,
-    default:Date.now(),
+    default:Date.now,
  }
 });
 
