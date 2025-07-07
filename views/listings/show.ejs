@@ -31,7 +31,7 @@
     <form action="/listings/<%= listing.id %>/reviews" method="post">
       <div class="mb-3 mt-3">
         <label for="rating" class="form-label">Rating</label>
-        <input type="range" max="5" min="1" id="rating" name="review[rating]" class="form-range">
+        <input type="range" max="5" min="1" id="rating" name="review[rating]" class="form-range" required>
       </div>
       <div class="mb-3 mt-3">
         <label for="comment" class="form-label">Comment</label>
@@ -43,7 +43,19 @@
    <br><hr>
    <div>
     <h4>All Reviews</h4>
-    <p><%= listing.reviews %></p>
+    <% if (listing.reviews.length === 0) { %>
+      <p>No reviews yet.</p>
+    <% } else { %>
+      <% for (let review of listing.reviews) { %>
+        <div class="card mb-3" style="background-color: rgb(223, 245, 245); padding: 10px;">
+          <div class="card-body " >
+    
+            <h6 class="card-subtitle mb-2 text-muted" style="margin: 1px;">Rating: <%= review.rating %> / 5</h6>
+            <p class="card-text"> Comment : <%= review.comment %></p>
+          </div>
+        </div>
+      <% } %>
+    <% } %>
    </div>
        
     

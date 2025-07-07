@@ -134,7 +134,9 @@ app.post("/listings/:id/reviews",async function (req,res){
 await listing.save();
 
 // req.send("New review save")
-res.redirect(`/listings/${req.params.id}`)
+// res.redirect(`/listings/${req.params.id}`)
+res.redirect(`/listings/${listing._id}`);
+
 })
 
 //!Error handling middleware
