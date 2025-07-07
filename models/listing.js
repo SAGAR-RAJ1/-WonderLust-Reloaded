@@ -18,6 +18,12 @@ const listingSchema = new Schema({
   price: Number,
   location: String,
   country: String,
+
+  //Reviews are one to many relation typically under thousands
+  reviews:[{
+    type:Schema.Types.ObjectId,
+    ref:"Review",
+  }]
 });
 
 const Listing = mongoose.model("Listing", listingSchema);
