@@ -53,7 +53,7 @@
             <h6 class="card-subtitle mb-2 text-muted" style="margin: 1px;">Rating: <%= review.rating %> / 5</h6>
             <p class="card-text"> Comment : <%= review.comment %></p>
           </div>
-          <form action="/listing/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+          <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
             <button class="btn btn-outline-dark mt-2">Delete</button>
           </form>
         </div>
