@@ -43,7 +43,10 @@ const sessionOptions = {
   secret : "mysupersecretcode", // cookies m kaam aata search krolo (just like privacy pass)
   resave :false,
   saveUninitialized:true,  //ye dono likhna pdta error aaata kiuch chat gpt m dkeh lo
-
+  cookie:{
+    expires:Date.now()+7*24*60*60*1000,//after how many time the cokkie will expire
+    httpOnly:true,//by default true so we set true no more knowledge about it now generally for security prevent crosssafety attacks
+  }
 }
 
 app.use(session(sessionOptions));
