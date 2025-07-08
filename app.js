@@ -6,6 +6,7 @@ const Review = require("./models/review.js");//Acquiring model
 const methodOverride = require('method-override'); // Update and delete req
 const ejsMate = require("ejs-mate");//helps to create template
 app.engine('ejs', ejsMate)  //
+const session = require("express-session") //May be for cookies
 
 //! Requiring listing from listing .js
 const listings = require("./routes/listing.js")
@@ -37,6 +38,16 @@ main()
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
 }
+//todo Using session
+const sessionOptions = {
+  secret : "mysupersecretcode", // cookies m kaam aata search krolo (just like privacy pass)
+  resave :false,
+  saveUninitialized:true,  //ye dono likhna pdta error aaata kiuch chat gpt m dkeh lo
+
+}
+
+app.use(session(sessionOptions));
+
 
 app.get("/", function (req, res) {
   res.send("Root Route");
