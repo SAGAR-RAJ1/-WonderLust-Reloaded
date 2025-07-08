@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Listing = require("../models/listing");
-const wrapAsync = require("../utils/wrapAsync");
+const wrapAsync = require("../utils/WrapAsync");
 const ExpressError = require("../utils/ExpressError");
 
 //! Index Route
@@ -65,7 +65,7 @@ router.get("/listings",wrapAsync (async function (req, res) {
   
   //! Update Route
   
-  router.put("/listing/:id",wrapAsync( async function (req, res) {
+  router.put("/listings/:id",wrapAsync( async function (req, res) {
     let { id } = req.params;
     let {title,description,image,price,location,country} = req.body;
      
