@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const Listing = require("./models/listing.js");
-const Review = require("./models/review.js");
-const methodOverride = require('method-override');
+const Listing = require("./models/listing.js");//Acquiring model
+const Review = require("./models/review.js");//Acquiring model
+const methodOverride = require('method-override'); // Update and delete req
 const ejsMate = require("ejs-mate");//helps to create template
 app.engine('ejs', ejsMate)  //
+
+//! Requiring listing from listing .js
+const listings = require("./routes/listing.js")
 
 const wrapAsync = require("./utils/WrapAsync.js");
 const ExpressError= require("./utils/ExpressError.js");
@@ -35,6 +38,11 @@ async function main() {
 app.get("/", function (req, res) {
   res.send("Root Route");
 });
+
+//! Acquiring the listing routes from routes folder
+//! As the code is being restructing with Express router for better readability
+app.use("/",listings)
+
 
 
 // Catch-all route handler (404)
