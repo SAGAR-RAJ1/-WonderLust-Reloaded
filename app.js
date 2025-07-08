@@ -9,6 +9,8 @@ app.engine('ejs', ejsMate)  //
 
 //! Requiring listing from listing .js
 const listings = require("./routes/listing.js")
+//! Requiring Review from review .js
+const reviews = require("./routes/review.js")
 
 // const wrapAsync = require("./utils/WrapAsync.js");
 const wrapAsync = require("./utils/WrapAsync.js");
@@ -44,6 +46,10 @@ app.get("/", function (req, res) {
 //! As the code is being restructing with Express router for better readability
 app.use("/",listings)
 
+//! Acquiring the review routes from routes folder
+//! As the code is being restructing with Express router for better readability
+app.use("/listings/:id/reviews", reviews);
+
 
 
 // Catch-all route handler (404)
@@ -51,33 +57,6 @@ app.use("/",listings)
 // res.send("hy")
 // });
 
-//!reviews
-//post route for the reviews
-app.post("/listings/:id/reviews",async function (req,res){
- let listing = await Listing.findById(req.params.id);
- let newRev = new Review(req.body.review);
-
- listing.reviews.push(newRev);
-
- await newRev.save();
-await listing.save();
-
-// req.send("New review save")
-// res.redirect(`/listings/${req.params.id}`)
-res.redirect(`/listings/${listing._id}`);
-
-})
-
-//!  Delete Review Route
-app.delete("/listings/:id/reviews/:reviewId",async(req,res)=>{
-     
-   let {id,reviewId}=req.params;
-
-   await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
-   await Review.findByIdAndDelete(reviewId);
-
-   res.redirect(`/listings/${id}`);
-})
 
 //!Error handling middleware
 app.use((err, req, res, next) => {
