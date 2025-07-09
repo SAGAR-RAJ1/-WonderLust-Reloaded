@@ -6,7 +6,11 @@ const Review = require("./models/review.js");//Acquiring model
 const methodOverride = require('method-override'); // Update and delete req
 const ejsMate = require("ejs-mate");//helps to create template
 app.engine('ejs', ejsMate)  //
+
+
 const session = require("express-session") //May be for cookies
+
+const flash = require("connect-flash");
 
 //! Requiring listing from listing .js
 const listings = require("./routes/listing.js")
@@ -38,6 +42,12 @@ main()
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
 }
+
+app.get("/", function (req, res) {
+  res.send("Root Route");
+});
+
+
 //todo Using session
 const sessionOptions = {
   secret : "mysupersecretcode", // cookies m kaam aata search krolo (just like privacy pass)
@@ -50,11 +60,16 @@ const sessionOptions = {
 }
 
 app.use(session(sessionOptions));
+//todo USing flash (routes se phle likhayega kuki route k use krk use hota)
 
 
-app.get("/", function (req, res) {
-  res.send("Root Route");
-});
+app.use(flash());//Aage listing.js create m milega
+//todo listing se phle flash k liye middleware likhenge
+app.use((req,res,next)=>{
+  res.locals.success=req.flash("success");
+  next();//next k call krna importannt warna isi middle ware m stuck hoke reh jaoge
+})
+
 
 //! Acquiring the listing routes from routes folder
 //! As the code is being restructing with Express router for better readability

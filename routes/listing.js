@@ -48,9 +48,10 @@ router.get("/listings",wrapAsync (async function (req, res) {
     });
   
     await newListing.save();
-  
-    // res.redirect("./listings")
-    res.send("Listing saved successfully!");
+  //todo using flash
+  req.flash("success","New Listing Created!")
+    res.redirect("/listings")
+    // res.send("Listing saved successfully!");
   }));
   
   //! Edit Route
