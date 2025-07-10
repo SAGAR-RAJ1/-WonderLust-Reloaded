@@ -3,6 +3,7 @@ const router = express.Router({mergeParams:true});//merge params to get the data
 
 
 router.get("/signup",(req,res)=>{
-    res.send("form")
+  
+    res.render("users/signup.ejs")
 })
 module.exports=router;
