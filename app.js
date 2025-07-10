@@ -8,6 +8,12 @@ const ejsMate = require("ejs-mate");//helps to create template
 app.engine('ejs', ejsMate)  //
 
 
+//todo Acquiring things for authentication for using passport 
+const passport = require("passport");
+const localStratergy = require("passport-local")
+const User = require("./models/user.js")
+
+
 const session = require("express-session") //May be for cookies
 
 const flash = require("connect-flash");
@@ -69,6 +75,17 @@ app.use((req,res,next)=>{
   res.locals.success=req.flash("success");
   next();//next k call krna importannt warna isi middle ware m stuck hoke reh jaoge
 })
+
+//todo session k baad hi aayega passport k middleware kuki session k jarurat hota login la(passport session ko use krta hai)
+app.use(passport.initialize());//har request k liye passport initialize ho jayega
+app.use(passport.session());//taki passport ko pta kko konsa session k part h baar baar logon n krna pdde session tk
+//ye do middleware passport use krne k liye hmesha use krte
+passport.use(new localStratergy(User.authenticate()));
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+
+
 
 
 //! Acquiring the listing routes from routes folder
