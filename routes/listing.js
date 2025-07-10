@@ -4,6 +4,9 @@ const Listing = require("../models/listing");
 const wrapAsync = require("../utils/WrapAsync");
 const ExpressError = require("../utils/ExpressError");
 
+// middleware for authentication
+const {isLoggedIn} = require("../middleware")
+
 //! Index Route
 
 router.get("/listings",wrapAsync (async function (req, res) {
@@ -13,8 +16,12 @@ router.get("/listings",wrapAsync (async function (req, res) {
   
   //! New Route
   
-  router.get("/listings/new", function (req, res) {
-    res.render("./listings/new.ejs");
+  router.get("/listings/new",isLoggedIn, function (req, res) {
+
+      res.render("./listings/new.ejs");
+
+ 
+      
   });
   //! Show Route
   
@@ -26,7 +33,7 @@ router.get("/listings",wrapAsync (async function (req, res) {
   
   //! Create Route
   
-  router.post("/listings", wrapAsync(async function (req, res) {
+  router.post("/listings",isLoggedIn, wrapAsync(async function (req, res) {
     let {title,description,image,price,location,country} = req.body;
     console.log("Received body:", req.body);
   
@@ -56,7 +63,7 @@ router.get("/listings",wrapAsync (async function (req, res) {
   
   //! Edit Route
   
-  router.get("/listing/:id/edit", wrapAsync(async function (req, res) {
+  router.get("/listing/:id/edit",isLoggedIn, wrapAsync(async function (req, res) {
     let { id } = req.params;
     const listing = await Listing.findById(id);
   
@@ -66,7 +73,7 @@ router.get("/listings",wrapAsync (async function (req, res) {
   
   //! Update Route
   
-  router.put("/listings/:id",wrapAsync( async function (req, res) {
+  router.put("/listings/:id",isLoggedIn,wrapAsync( async function (req, res) {
     let { id } = req.params;
     let {title,description,image,price,location,country} = req.body;
      
@@ -79,7 +86,7 @@ router.get("/listings",wrapAsync (async function (req, res) {
   
   //! Delete route
   
-  router.delete("/listing/:id",wrapAsync( async function (req, res) {
+  router.delete("/listing/:id",isLoggedIn,wrapAsync( async function (req, res) {
     let {id} = req.params;
     await Listing.findByIdAndDelete(id);
     // res.redirect(`/listing/{$id}`);  mistake i have made in the syntax
