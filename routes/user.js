@@ -19,8 +19,14 @@ router.post("/signup",async(req,res)=>{
         const newUSer = new User({email,username});
         const registeredUser = await User.register(newUSer,password);
         console.log(registeredUser);
-        req.flash("success","Welcome to WanderLust");
-        res.redirect("/listings")
+        req.login(registeredUser,(err)=>{// this is for automatically login after the sign-up
+            if(err){
+                return next(err);// if there is an error, this will execute or if there is not an error the other code will execute normally
+            }
+            req.flash("success","Welcome to WanderLust");
+            res.redirect("/listings")
+        })
+     
     } catch (error) {
         
      res.send("Account exists go back to signup page")
