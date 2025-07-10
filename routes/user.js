@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router({mergeParams:true});//merge params to get the data from the parent query
-const User= require("../models/user")
+const User= require("../models/user");
+const passport = require('passport');
 
 router.get("/signup",(req,res)=>{
   
     res.render("users/signup.ejs")
+})
+router.get("/login",(req,res)=>{
+  
+    res.render("users/login.ejs")
 })
 
 router.post("/signup",async(req,res)=>{
@@ -21,6 +26,12 @@ router.post("/signup",async(req,res)=>{
      res.send("Account exists go back to signup page")
     }
    
+})                   //Middleware for checking users already exist or not
+router.post("/login",passport.authenticate("local",{failureRedirect:'/login',failureFlash:true}) ,async(req,res)=>{
+                                           //statergy    //failure k case m kaha redirect ho
+    req.flash("success","Welcome to WanderLust");  
+    res.redirect("/listings")
+
 })
 
 
