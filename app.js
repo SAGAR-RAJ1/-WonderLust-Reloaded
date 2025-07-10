@@ -19,9 +19,12 @@ const session = require("express-session") //May be for cookies
 const flash = require("connect-flash");
 
 //! Requiring listing from listing .js
-const listings = require("./routes/listing.js")
+const listingsRouter = require("./routes/listing.js")
 //! Requiring Review from review .js
-const reviews = require("./routes/review.js")
+const reviewsRouter = require("./routes/review.js")
+//! Requiring User from user.js
+const userRouter = require("./routes/user.js")
+
 
 // const wrapAsync = require("./utils/WrapAsync.js");
 const wrapAsync = require("./utils/WrapAsync.js");
@@ -90,11 +93,14 @@ passport.serializeUser(User.serializeUser())
 
 //! Acquiring the listing routes from routes folder
 //! As the code is being restructing with Express router for better readability
-app.use("/",listings)
+app.use("/",listingsRouter)
 
 //! Acquiring the review routes from routes folder
 //! As the code is being restructing with Express router for better readability
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings/:id/reviews", reviewsRouter);
+
+//! Acquiring the signup routes from routes folder
+app.use("/", userRouter);
 
 
 
