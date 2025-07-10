@@ -82,7 +82,7 @@ app.use(passport.session());//taki passport ko pta kko konsa session k part h ba
 //ye do middleware passport use krne k liye hmesha use krte
 passport.use(new localStratergy(User.authenticate()));
 passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
+ passport.deserializeUser(User.deserializeUser())
 
 
 
