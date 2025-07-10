@@ -6,9 +6,23 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link  aria-current="page" href="/">Home</a>
+          <a class="nav-link" aria-current="page" href="/">Home</a>
           <a class="nav-link" href="/listings">All Listings</a>
           <a class="nav-link" href="/listings/new">Add New Listings</a>
+
+        </div>
+        <div class="navbar-nav ms-auto">
+             <!-- if(!req.user) aise direct store or use n kr skhte locals k use krenge jo flash m kiye the -->
+             <% if(!currUser) {%>
+              <a class="nav-link" aria-current="page" href="/login">Log in</a>
+              <a class="nav-link" href="/signup">Sign up</a>
+            <% } %>
+            
+            <% if(currUser) { %>
+              <a class="nav-link" href="/logout">Logout</a>
+            <% } %>
+         
+       
 
         </div>
       </div>

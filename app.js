@@ -73,11 +73,6 @@ app.use(session(sessionOptions));
 
 
 app.use(flash());//Aage listing.js create m milega
-//todo listing se phle flash k liye middleware likhenge
-app.use((req,res,next)=>{
-  res.locals.success=req.flash("success");
-  next();//next k call krna importannt warna isi middle ware m stuck hoke reh jaoge
-})
 
 //todo session k baad hi aayega passport k middleware kuki session k jarurat hota login la(passport session ko use krta hai)
 app.use(passport.initialize());//har request k liye passport initialize ho jayega
@@ -87,6 +82,13 @@ passport.use(new localStratergy(User.authenticate()));
 passport.serializeUser(User.serializeUser())
  passport.deserializeUser(User.deserializeUser())
 
+//todo listing se phle flash k liye middleware likhenge
+app.use((req,res,next)=>{
+  res.locals.success=req.flash("success");
+  res.locals.error=req.flash("error");
+  res.locals.currUser=req.user;//initialize or session k baad use kr skhte phle wo log aayega passport k
+  next();//next k call krna importannt warna isi middle ware m stuck hoke reh jaoge
+})
 
 
 

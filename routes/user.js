@@ -35,7 +35,7 @@ router.post("/login",passport.authenticate("local",{failureRedirect:'/login',fai
 })
 
 router.get("/logout",(req,res,next)=>{
-    req.logout((err)=>{
+    req.logout((err)=>{//Passport k apna checking h logout krne k liye
         if(err){
             return next(err);
         }
