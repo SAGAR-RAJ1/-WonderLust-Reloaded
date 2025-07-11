@@ -24,7 +24,11 @@ const listingSchema = new Schema({
   reviews:[{
     type:Schema.Types.ObjectId,
     ref:"Review",
-  }]
+  }],
+  owner:{
+    type:Schema.Types.ObjectId,
+    ref:"User",
+  }
 });
 
 //listing delete krne k baad usk andr jo review h wo sara data v delete ho jaye
