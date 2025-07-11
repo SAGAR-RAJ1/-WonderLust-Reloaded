@@ -14,7 +14,7 @@
       <p><%= listing.country  %> </p>
      
     </div>
-
+<% if(currUser && listing.owner._id.equals(currUser._id)) {%>
    <div class="buttons">
      <form action="/listing/<%= listing._id  %>/edit" method="get">
             <button class="btn btn-dark">Edit Route</button>
@@ -24,7 +24,7 @@
         <form action="/listing/<%= listing._id  %>?_method=DELETE" method="post">
             <button class="btn btn-dark">Delete Route</button>
         </form>
-
+<% } %>
    </div>
    <br><hr>
    <div class="col-8 offset-2 mb-3">
