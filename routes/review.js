@@ -3,37 +3,14 @@ const router = express.Router({mergeParams:true});//merge params to get the data
 const Listing = require("../models/listing");
 const Review = require("../models/review");
 const { isLoggedIn, isReviewAuthor } = require('../middleware');
+const WrapAsync = require('../utils/WrapAsync');
 
-
+const ListingReview = require("../controllers/review")
 //!reviews
 //post route for the reviews
-router.post("/",async function (req,res){
-    let listing = await Listing.findById(req.params.id);
-    let newRev = new Review(req.body.review);
-   newRev.author=req.user._id;
-
-
-    listing.reviews.push(newRev);
-   
-    await newRev.save();
-   await listing.save();
-   
-   // req.send("New review save")
-   // res.redirect(`/listings/${req.params.id}`)
-   res.redirect(`/listings/${listing._id}`);
-   
-   })
+router.post("/",isLoggedIn,WrapAsync(ListingReview.ReviewPost))
    
    //!  Delete Review Route
-   router.delete("/:reviewId",isLoggedIn,isReviewAuthor,async(req,res)=>{
-        
-      let {id,reviewId}=req.params;
-   
-      await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
-      await Review.findByIdAndDelete(reviewId);
-      req.flash("success","Review is deleted")
-   
-      res.redirect(`/listings/${id}`);
-   })
+   router.delete("/:reviewId",isLoggedIn,isReviewAuthor,WrapAsync(ListingReview.ReviewDelete))
    
    module.exports=router;
