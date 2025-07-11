@@ -27,7 +27,7 @@ router.get("/listings",wrapAsync (async function (req, res) {
   
   router.get("/listings/:id", wrapAsync(async function (req, res) {
     let { id } = req.params;                 //populate add kiye kuki  object k id k sath sath uska data v is m aaye  islye add kiye
-    const listing = await Listing.findById(id).populate("reviews");
+    const listing = await Listing.findById(id).populate("reviews").populate("owner");
     res.render("./listings/show.ejs", { listing });
   }));
   
@@ -53,6 +53,7 @@ router.get("/listings",wrapAsync (async function (req, res) {
       location,
       country,
     });
+    newListing.owner = req.user._id;//Username alag se dalna pdega
   
     await newListing.save();
   //todo using flash
