@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router({mergeParams:true});//merge params to get the data from the parent query
 const Listing = require("../models/listing");
-const Review = require("../models/review")
+const Review = require("../models/review");
+const { isLoggedIn, isReviewAuthor } = require('../middleware');
 
 
 //!reviews
@@ -9,7 +10,9 @@ const Review = require("../models/review")
 router.post("/",async function (req,res){
     let listing = await Listing.findById(req.params.id);
     let newRev = new Review(req.body.review);
-   
+   newRev.author=req.user._id;
+
+
     listing.reviews.push(newRev);
    
     await newRev.save();
@@ -22,7 +25,7 @@ router.post("/",async function (req,res){
    })
    
    //!  Delete Review Route
-   router.delete("/:reviewId",async(req,res)=>{
+   router.delete("/:reviewId",isLoggedIn,isReviewAuthor,async(req,res)=>{
         
       let {id,reviewId}=req.params;
    
