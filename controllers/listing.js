@@ -16,8 +16,12 @@ module.exports.Show = async function (req, res) {
   res.render("./listings/show.ejs", { listing });
 };
 module.exports.Create = async function (req, res) {
-  let { title, description, image, price, location, country } = req.body;
+
+  let { title, description,  price, location, country } = req.body;
   console.log("Received body:", req.body);
+  let url = req.file.path;
+  let filename = req.file.filename;
+
 
   if (!title || !description || !price || !location || !country) {
     throw new ExpressError("All fields are required", 400);
@@ -29,12 +33,12 @@ module.exports.Create = async function (req, res) {
   // console.log("Price after conversion:", price);
   const newListing = new Listing({
     title: title,
-    description: description,
-    image, //Dono method shi h naam same h toh direct v likh skhte ho
+    description: description, //Dono method shi h naam same h toh direct v likh skhte ho
     price,
     location,
     country,
   });
+  newListing.image={url,filename}
   newListing.owner = req.user._id; //Username alag se dalna pdega
 
   await newListing.save();
