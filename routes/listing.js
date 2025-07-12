@@ -32,11 +32,11 @@ router.get("/listings",wrapAsync (ListingController.index));
   
   //! Create Route
   
-  // router.post("/listings",isLoggedIn, wrapAsync(ListingController.Create));
-  router.post("/listings",isLoggedIn,upload.single('image'), (req,res)=>{
-    console.log(req.file);
-    res.send(req.file)
-  });
+  router.post("/listings",isLoggedIn,upload.single('image'), wrapAsync(ListingController.Create));
+  // router.post("/listings",isLoggedIn,upload.single('image'), (req,res)=>{
+  //   console.log(req.file);
+  //   res.send(req.file)
+  // });
   
   //! Edit Route
   
