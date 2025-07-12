@@ -4,6 +4,14 @@ const Listing = require("../models/listing");
 const wrapAsync = require("../utils/WrapAsync");
 const ExpressError = require("../utils/ExpressError");
 
+
+
+
+const multer  = require('multer')//package for multiport
+// const upload = multer({ dest: 'uploads/' })//kaha p file store hoga
+const { storage } = require('../cloudConfig');
+const upload = multer({ storage})//kaha p file store hoga
+
 // middleware for authentication
 const {isLoggedIn} = require("../middleware")
 
@@ -24,7 +32,11 @@ router.get("/listings",wrapAsync (ListingController.index));
   
   //! Create Route
   
-  router.post("/listings",isLoggedIn, wrapAsync(ListingController.Create));
+  // router.post("/listings",isLoggedIn, wrapAsync(ListingController.Create));
+  router.post("/listings",isLoggedIn,upload.single('image'), (req,res)=>{
+    console.log(req.file);
+    res.send(req.file)
+  });
   
   //! Edit Route
   

@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate") %>
   <body>
     <h3 style="font-family: Arial, sans-serif;" class="mt-1">Enter your Listing</h3>
-    <form action="/listings" method="post" novalidate class="needs-validation" >
+    <form action="/listings" method="post" novalidate class="needs-validation" enctype="multipart/form-data" >
       <div class="mb-3">
         <label for="title" class="form-label">Title : </label>
         <input
@@ -29,7 +29,7 @@
       </div>
       <div class="mb-3">
         <label for="image" class="form-label">Image-URL : </label>
-        <input type="text" placeholder="Enter image url" name="image" class="form-control" />
+        <input type="file" placeholder="Enter image url" name="image" class="form-control" />
         
       </div>
 
