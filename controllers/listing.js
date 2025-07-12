@@ -57,14 +57,22 @@ module.exports.Edit = async function (req, res) {
 
 module.exports.Update = async function (req, res) {
   let { id } = req.params;
-  let { title, description, image, price, location, country } = req.body;
+  let { title, description, price, location, country } = req.body;
 
   // Listing.findByIdAndUpdate()
-  await Listing.findByIdAndUpdate(
+  let newlisting = await Listing.findByIdAndUpdate(
     id,
-    { title, description, image, price, location, country },
+    { title, description, price, location, country },
     { new: true }
   );
+
+  if(typeof req.file !== "undefined"){
+    let url = req.file.path;
+    let filename =req.file.filename;
+  newlisting.image = {url,filename};
+  
+  await newlisting.save();
+  }
 
   res.redirect(`/listings/${id}`);
 };

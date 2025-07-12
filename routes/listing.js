@@ -44,7 +44,7 @@ router.get("/listings",wrapAsync (ListingController.index));
   
   //! Update Route
   
-  router.put("/listings/:id",isLoggedIn,wrapAsync(ListingController.Update));
+  router.put("/listings/:id",isLoggedIn,upload.single('image[url]'),wrapAsync(ListingController.Update));
   
   //! Delete route
   
