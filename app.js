@@ -56,9 +56,9 @@ async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
 }
 
-app.get("/", function (req, res) {
-  res.send("Root Route");
-});
+// app.get("/", function (req, res) {
+//   res.send("Root Route");
+// });
 
 
 //todo Using session
