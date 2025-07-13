@@ -52,7 +52,10 @@ module.exports.Edit = async function (req, res) {
   let { id } = req.params;
   const listing = await Listing.findById(id);
 
-  res.render("listings/edit.ejs", { listing });
+  let originalImageUrl = listing.image.url;
+  originalImageUrl= originalImageUrl.replace('/upload','/upload/w_300') //decreasing the pixel sixe by using api of cloudinary
+
+  res.render("listings/edit.ejs", { listing ,originalImageUrl });
 };
 
 module.exports.Update = async function (req, res) {

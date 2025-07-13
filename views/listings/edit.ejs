@@ -12,8 +12,8 @@
             <textarea name="description" style="resize: none;" class="form-control" rows="5" required ><%= listing.description  %>  </textarea>
         </div>
         <p>Original listing Image : </p> 
-        <div class="mb-3 "  style="height: 10rem;width: 20rem; overflow: hidden;">
-           <img src="<%= listing.image.url  %>" alt="Listing img" style="object-fit: cover; height: 100%; border-radius: 3rem;">
+        <div class="mb-3 "  style="height: 10rem ;width: 20rem; overflow: hidden;">
+           <img src="<%= originalImageUrl  %>" alt="Listing img" style="object-fit: fill; height: 100%; border-radius: 1rem;">
         </div>
         <div class="mb-3" >
             <label for="image" class="form-label">Upload Image:</label>
