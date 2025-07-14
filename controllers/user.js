@@ -1,3 +1,5 @@
+const User = require("../models/user");
+
 module.exports.Signup= (req, res) => {
   res.render("users/signup.ejs");
 };
@@ -20,7 +22,9 @@ module.exports.PostSignup = async (req, res) => {
       res.redirect("/listings");
     });
   } catch (error) {
-    res.send("Account exists go back to signup page");
+    console.error("Signup error:", error); // see error in terminal
+    req.flash("error", error.message);     // show message in UI
+    res.redirect("/signup");
   }
 };
 module.exports.PostLogin = async (req, res) => {
