@@ -55,9 +55,9 @@ async function main() {
   await mongoose.connect(DBUrl);
 }
 
-// app.get("/", function (req, res) {
-//   res.send("Root Route");
-// });
+ app.get("/", function (req, res) {
+     res.redirect("/listings")
+ });
 
 const secret = process.env.SECRET;
 
