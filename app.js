@@ -2,16 +2,18 @@ if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
 
+//todo--------> Step 1 : acquiring things and then connect to Mongo DB
+
 const express = require("express");
 const app = express();
 const path = require("path");
 const Listing = require("./models/listing.js"); //Acquiring model
 const Review = require("./models/review.js"); //Acquiring model
 const methodOverride = require("method-override"); // Update and delete req
-const ejsMate = require("ejs-mate"); //helps to create template
+const ejsMate = require("ejs-mate"); //helps to create template eg agar nav bar sb m dikhana h toh boilerplate bnanae. m kaam aata hai
 app.engine("ejs", ejsMate); //
 
-//todo Acquiring things for authentication for using passport
+//! Acquiring things for authentication for using passport
 const passport = require("passport");
 const localStratergy = require("passport-local");
 const User = require("./models/user.js");
@@ -33,14 +35,21 @@ const userRouter = require("./routes/user.js");
 const wrapAsync = require("./utils/WrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 
-app.set("view engine", "ejs");
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
-app.set("views", path.join(__dirname, "views"));
-app.use(methodOverride("_method"));
+app.set("view engine", "ejs");// Use: Tells Express to use EJS as the template engine so you can render .ejs files using:
+app.use(express.json());//Use: Parses incoming JSON data from the request body and stores it in req.body.
+app.use(express.urlencoded({ extended: true }));//Use: Parses data sent from HTML forms and stores it in req.body.
+//If data comes from:
+// HTML <form> → express.urlencoded()
+// API / React / Postman / fetch() → express.json()
 
-//connection with the mongodb server using mongoose
+
+app.use(express.static(path.join(__dirname, "public")));//Use: Makes all files inside the public folder (CSS, JavaScript, images, fonts, etc.) accessible to the browser.
+app.set("views", path.join(__dirname, "views"));//Use: Tells Express that all EJS template files are inside the views folder.
+app.use(methodOverride("_method"));//Use: Allows HTML forms to send PUT and DELETE requests, even though forms normally support only GET and POST.
+
+//!connection with the mongodb server using mongoose
+//todo -----------> Connected to Mongo DB step 2 : create Listing
+
 const mongoose = require("mongoose");
 const { title } = require("process");
 const LUrl = "mongodb://127.0.0.1:27017/wanderlust";
@@ -55,6 +64,8 @@ async function main() {
   await mongoose.connect(DBUrl);
 }
 
+//todo -----> This route is added Not exactly it will be edited later and all the routes will be 
+//todo transferred to diff folder routes. STEP 6 :Created views folder to store views of diff model 
  app.get("/", function (req, res) {
      res.redirect("/listings")
  });

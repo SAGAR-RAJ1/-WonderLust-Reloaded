@@ -1,3 +1,4 @@
+//todo-------> Added sample data Step 4 : added index.js for initialization
 const sampleListings = [
     {
       title: "Cozy Beachfront Cottage",

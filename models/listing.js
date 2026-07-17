@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review")
-
+//todo -------> Listing Model Created. step 3 : Add data in Init Folder 
 const listingSchema = new Schema({
   title: {
     type: String,
