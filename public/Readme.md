@@ -1,0 +1,1 @@
+This folder public is to serve static files

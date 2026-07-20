@@ -42,7 +42,6 @@ app.use(express.urlencoded({ extended: true }));//Use: Parses data sent from HTM
 // HTML <form> → express.urlencoded()
 // API / React / Postman / fetch() → express.json()
 
-
 app.use(express.static(path.join(__dirname, "public")));//Use: Makes all files inside the public folder (CSS, JavaScript, images, fonts, etc.) accessible to the browser.
 app.set("views", path.join(__dirname, "views"));//Use: Tells Express that all EJS template files are inside the views folder.
 app.use(methodOverride("_method"));//Use: Allows HTML forms to send PUT and DELETE requests, even though forms normally support only GET and POST.
@@ -133,8 +132,9 @@ app.use("/", userRouter);
 // res.send("hy")
 // });
 
-//!Error handling middleware
+//!Error handling middleware  i.e may be usk liye agar save krte samai ya waisa kuch DB se error aaye direct
 app.use((err, req, res, next) => {
+       // equal to k baad jo likhe hai wo act as default value krega aagr kuch nhi aaya toh wo run krega
   let { status = 500, message = "Something went wrong" } = err;
   res.status(status).send(message);
 });
