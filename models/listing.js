@@ -27,7 +27,7 @@ const listingSchema = new Schema({
   }
 });
 
-//listing delete krne k baad usk andr jo review h wo sara data v delete ho jaye
+//todo listing delete krne k baad usk andr jo review h wo sara data v delete ho jaye usk liye middleware hai
 listingSchema.post("findOneAndDelete",async(listing)=>{
   if(listing){
     await Review.deleteMany({_id:{$in: listing.reviews}});
