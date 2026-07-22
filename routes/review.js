@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router({mergeParams:true});//merge params to get the data from the parent query
+const router = express.Router({mergeParams:true});//todo merge params to get the data from the parent query warna query jo h wo parent m hi i.e app.js m hi rh jayega child m n ayega error ho jayega
 const Listing = require("../models/listing");
 const Review = require("../models/review");
 const { isLoggedIn, isReviewAuthor } = require('../middleware');
