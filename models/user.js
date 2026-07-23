@@ -11,8 +11,9 @@ const userSchema = new Schema({
 });
 
 //Password salting hashing passport khud implement kr deta hai usk liye ye plugin k use kiye hai
+userSchema.plugin(passportLocalMongoose);
 //OR isliye v upar bs email define kiye h password nhi baki agar mn  kre toh name ya kuch or field v daal skhte usko v hash salt kr dega
 
-userSchema.plugin(passportLocalMongoose);
+
 
 module.exports = mongoose.model('User', userSchema);

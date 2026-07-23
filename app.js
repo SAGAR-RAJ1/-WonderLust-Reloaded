@@ -99,12 +99,12 @@ app.use(session(sessionOptions));
 //todo USing flash (routes se phle likhayega kuki route k use krk use hota)
 
 app.use(flash()); //Aage listing.js create m milega
-
+ 
 //todo session k baad hi aayega passport k middleware kuki session k jarurat hota login la(passport session ko use krta hai)
 app.use(passport.initialize()); //har request k liye passport initialize ho jayega
 app.use(passport.session()); //taki passport ko pta kko konsa session k part h baar baar logon n krna pdde session tk
 //ye do middleware passport use krne k liye hmesha use krte
-passport.use(new localStratergy(User.authenticate()));
+passport.use(new localStratergy(User.authenticate()));//user localy authenticate ho or statergy use hoga user model wala
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 

@@ -32,7 +32,7 @@ module.exports.PostLogin = async (req, res) => {
   req.flash("success", "Welcome to WanderLust");
   res.redirect("/listings");
 };
-
+//todo for logging out this is also provided by the passport
 module.exports.Logout= (req, res, next) => {
   req.logout((err) => {
     //Passport k apna checking h logout krne k liye
